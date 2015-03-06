@@ -1,5 +1,3 @@
-package Meeting;
-
 /**
  * A meeting that was held in the past.
  *

@@ -1,6 +1,6 @@
-package Contact;
 
 public class ContactImpl implements Contact {
+
     private int myId;
     private String myName;
     private String myNotes;
