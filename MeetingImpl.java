@@ -8,6 +8,13 @@ public class MeetingImpl implements Meeting {
     private Calendar myDate;
     private Set<Contact> myContacts;
 
+    public MeetingImpl(Set<Contact> Contacts, Calendar meetingDate)
+    {
+        myMeetingId = GlobalMeetingID;
+        GlobalMeetingID++;
+        myContacts = Contacts;
+        myDate = meetingDate;
+    }
 
     public int getId()
     {
