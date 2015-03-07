@@ -1,21 +1,14 @@
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
 import static org.junit.Assert.*;
 
 public class ContactImplTest {
 
     private ContactImpl myContactClass;
 
-
     @Before
     public void setUp() throws Exception {
-        myContactClass = new ContactImpl();
-    }
-
-    @After
-    public void cleanUp() throws Exception {
-        myContactClass = new ContactImpl();
+        myContactClass = new ContactImpl("Anna");
     }
 
     @Test
@@ -30,6 +23,8 @@ public class ContactImplTest {
 
     @Test
     public void testGetNotes() throws Exception {
+
+        myContactClass.addNotes("test");
         assertNotNull(myContactClass.getNotes());
     }
 
@@ -50,10 +45,11 @@ public class ContactImplTest {
         int numberOfContacts = 10;
         int myId1, myId2;
         Contact [] myContacts = new ContactImpl[numberOfContacts];
+        String [] Names = {"Anna", "David", "Maria", "Nick", "Scott", "Andy", "Jack", "John", "Alan", "Julian"};
 
         for (int i = 0; i < numberOfContacts; i++)
         {
-            myContacts[i] = new ContactImpl();
+            myContacts[i] = new ContactImpl(Names[i]);
         }
 
         for (int i = 0; i < numberOfContacts; i++)
