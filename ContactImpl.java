@@ -27,6 +27,9 @@ public class ContactImpl implements Contact {
     }
     public void addNotes(String note)
     {
-        myNotes = myNotes + note;
+        StringBuilder st = new StringBuilder(myNotes);
+        st.append(note);
+        st.append(System.getProperty("line.separator"));
+        myNotes = st.toString();
     }
 }

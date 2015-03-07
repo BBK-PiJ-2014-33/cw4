@@ -31,9 +31,16 @@ public class ContactImplTest {
     @Test
     public void testAddNotes() throws Exception {
 
-        String expected = "test";
+        String expected;
         String output;
-        myContactClass.addNotes("test");
+
+        expected = "note1\n";
+        expected = expected + "note2\n";
+        expected = expected + "note3\n";
+
+        myContactClass.addNotes("note1");
+        myContactClass.addNotes("note2");
+        myContactClass.addNotes("note3");
         output = myContactClass.getNotes();
         assertEquals(output,expected);
     }
