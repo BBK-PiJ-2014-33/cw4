@@ -3,17 +3,25 @@ import java.util.Set;
 
 public class MeetingImpl implements Meeting {
 
-    int getId();
-    /**
-     * Return the date of the meeting. *
-     * @return the date of the meeting. */
-    Calendar getDate();
-    /**
-     * Return the details of people that attended the meeting. *
-     * The list contains a minimum of one contact (if there were
-     * just two people: the user and the contact) and may contain an
-     * arbitraty number of them. *
-     * @return the details of people that attended the meeting. */
-    Set<Contact> getContacts();
+    private static int GlobalMeetingID=1;
+    private int myMeetingId;
+    private Calendar myDate;
+    private Set<Contact> myContacts;
+
+
+    public int getId()
+    {
+        return myMeetingId;
+    }
+
+    public Calendar getDate()
+    {
+        return myDate;
+    }
+
+    public Set<Contact> getContacts()
+    {
+        return myContacts;
+    }
 }
 

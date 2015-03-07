@@ -1,7 +1,7 @@
 
 public class ContactImpl implements Contact {
 
-    private static int GlobalID=1;
+    private static int GlobalContactID=1;
     private int myId;
     private String myName;
     private String myNotes ="";
@@ -9,8 +9,8 @@ public class ContactImpl implements Contact {
     public ContactImpl(String Name)
     {
         myName = Name;
-        myId = GlobalID;
-        GlobalID++;
+        myId = GlobalContactID;
+        GlobalContactID++;
     }
 
     public int getId()
