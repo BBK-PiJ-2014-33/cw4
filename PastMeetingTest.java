@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 
 public class PastMeetingTest {
 
-    private PastMeeting myPastMeetingClass;
+    private PastMeetingImpl myPastMeetingClass;
     private Set<Contact> myContacts;
     Calendar myDate;
 
@@ -33,9 +33,17 @@ public class PastMeetingTest {
         assertNotNull(myPastMeetingClass.getNotes());
     }
 
-    /*@Test
-    public void testGetNotes() throws Exception {
-        //myPastMeetingClass
+    @Test
+    public void testAddNotesGetNotes() throws Exception
+    {
+        String expected = "note1\n";
+        expected = expected + "note2\n";
+        expected = expected + "note3\n";
 
-    }*/
+        myPastMeetingClass.addNotes("note1");
+        myPastMeetingClass.addNotes("note2");
+        myPastMeetingClass.addNotes("note3");
+
+        assertEquals(myPastMeetingClass.getNotes(), expected);
+    }
 }
