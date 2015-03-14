@@ -36,9 +36,9 @@ public class PastMeetingTest {
     @Test
     public void testAddNotesGetNotes() throws Exception
     {
-        String expected = "note1\n";
-        expected = expected + "note2\n";
-        expected = expected + "note3\n";
+        String expected = "note1\r\n";
+        expected = expected + "note2\r\n";
+        expected = expected + "note3\r\n";
 
         myPastMeetingClass.addNotes("note1");
         myPastMeetingClass.addNotes("note2");

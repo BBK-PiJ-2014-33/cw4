@@ -1,5 +1,6 @@
 import org.junit.Before;
 import org.junit.Test;
+
 import static org.junit.Assert.*;
 
 public class ContactImplTest {
@@ -34,9 +35,9 @@ public class ContactImplTest {
         String expected;
         String output;
 
-        expected = "note1\n";
-        expected = expected + "note2\n";
-        expected = expected + "note3\n";
+        expected = "note1\r\n";
+        expected = expected + "note2\r\n";
+        expected = expected + "note3\r\n";
 
         myContactClass.addNotes("note1");
         myContactClass.addNotes("note2");
@@ -67,7 +68,8 @@ public class ContactImplTest {
                 if(i!=k)
                 {
                     myId2 = myContacts[k].getId();
-                    assertNotEquals(myId1,myId2);
+                    assertFalse(myId1==myId2);
+                    //assertNotEquals(myId1,myId2);
                 }
 
             }

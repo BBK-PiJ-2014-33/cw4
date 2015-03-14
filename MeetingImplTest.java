@@ -80,7 +80,9 @@ public class MeetingImplTest {
                 if(i!=k)
                 {
                     myId2 = myMeetings[k].getId();
-                    assertNotEquals(myId1,myId2);
+                    assertFalse(myId1==myId2);
+                    //assertNotEquals not available
+                    //assertNotEquals(myId1,myId2);
                 }
 
             }
