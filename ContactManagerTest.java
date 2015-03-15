@@ -23,6 +23,7 @@ public class ContactManagerTest {
         {
             myContacts.add(new ContactImpl(Names[i]));
         }
+        myContactManagerClass = new ContactManagerImpl(myContacts);
 
     }
 
@@ -34,6 +35,7 @@ public class ContactManagerTest {
         myContactManagerClass.addFutureMeeting(myContacts,myDate);
 
     }
+
     @Test(expected = IllegalArgumentException.class)
     public void testFutureMeetingIllegalContact()
     {
@@ -46,7 +48,7 @@ public class ContactManagerTest {
             myFutureMeetingContacts.add(new ContactImpl(Names[i]));
         }
         myFutureMeetingContacts.add(new ContactImpl("Emily Storey"));
-        myContactManagerClass.addFutureMeeting(myContacts,myDate);
+        myContactManagerClass.addFutureMeeting(myFutureMeetingContacts,myDate);
     }
 
     @Test
@@ -55,7 +57,7 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myDate));
     }
 
-    @Test
+   /* @Test
     public void testGetPastMeeting() throws Exception {
 
     }
@@ -114,4 +116,4 @@ public class ContactManagerTest {
     public void testFlush() throws Exception {
 
     }
-}
+*/}
