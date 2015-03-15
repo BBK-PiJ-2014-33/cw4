@@ -70,6 +70,45 @@ public class ContactManagerTest {
         myPastMeetingID = myPastMeeting.getId();
         assertEquals(myContactManagerClass.getPastMeeting(myPastMeetingID), expected);
     }
+
+    @Test(expected = IllegalArgumentException.class)
+      public void testAddNewPastMeetingEmptyContact() {
+        Set<Contact> myPastMeetingContacts;
+        Calendar myPastDate = Calendar.getInstance();
+        myPastDate.set(1900, Calendar.JANUARY, 30);
+        myPastMeetingContacts = new HashSet<Contact>();
+        myContactManagerClass.addNewPastMeeting(myPastMeetingContacts, myPastDate, "meeting took place");
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddNewPastMeetingContactDoesNotExist() {
+        Set<Contact> myPastMeetingContacts;
+        Calendar myPastDate = Calendar.getInstance();
+        myPastDate.set(1900, Calendar.JANUARY, 30);
+        myPastMeetingContacts = new HashSet<Contact>();
+
+        int numberOfContacts = 5;
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Garcia", "Nick White", "Scott Goldstone"};
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myPastMeetingContacts.add(new ContactImpl(Names[i]));
+        }
+        myPastMeetingContacts.add(new ContactImpl("Emily Storey"));
+        myContactManagerClass.addNewPastMeeting(myPastMeetingContacts, myPastDate, "meeting took place");
+
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testAddNewPastMeetingNullArgument()
+    {
+        Set<Contact> myPastMeetingContacts;
+        myPastMeetingContacts = new HashSet<Contact>();
+        Calendar myPastDate = Calendar.getInstance();
+        myPastDate.set(1900, Calendar.JANUARY, 30);
+        myContactManagerClass.addNewPastMeeting(myPastMeetingContacts, myPastDate, "meeting took place");
+    }
+
+
 /*
     @Test
     public void testGetFutureMeeting() throws Exception {
@@ -96,10 +135,7 @@ public class ContactManagerTest {
 
     }
 
-    @Test
-    public void testAddNewPastMeeting() throws Exception {
 
-    }
 
     @Test
     public void testAddMeetingNotes() throws Exception {

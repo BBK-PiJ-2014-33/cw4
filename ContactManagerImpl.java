@@ -5,10 +5,12 @@ import java.util.Set;
 public class ContactManagerImpl implements ContactManager
 {
     private Set<Contact> myContacts;
+    private Set<Meeting> myMeetings;
 
     public ContactManagerImpl (Set<Contact> contacts)
     {
         myContacts = new HashSet<Contact>();
+        myMeetings = new HashSet<Meeting>();
         myContacts.addAll(contacts);
     }
 
@@ -36,4 +38,19 @@ public class ContactManagerImpl implements ContactManager
         PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance());
         return myPastMeeting;
     }
+
+    /**
+     * Create a new record for a meeting that took place in the past*
+     * @param contacts a list of participants
+     * @param date the date on which the meeting took place
+     * @param text messages to be added about the meeting.
+     * @throws IllegalArgumentException if the list of contacts is
+     * empty, or any of the contacts does not exist
+     * @throws NullPointerException if any of the arguments is null **/
+
+    public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text)
+    {
+
+    }
+
 }

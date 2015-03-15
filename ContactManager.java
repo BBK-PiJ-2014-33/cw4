@@ -32,6 +32,7 @@ public interface ContactManager {
      * @param id the ID for the meeting
      * @return the meeting with the requested ID, or null if it there is none.
      * @throws IllegalArgumentException if there is a meeting with that ID happening in the past *//*
+     *
      FutureMeeting getFutureMeeting(int id);
 
     *//**
@@ -39,6 +40,7 @@ public interface ContactManager {
      * *
      * @param id the ID for the meeting
      * @return the meeting with the requested ID, or null if it there is none.*//*
+     *
     Meeting getMeeting(int id);
 
     *//**
@@ -49,6 +51,7 @@ public interface ContactManager {
      * @param contact one of the user’s contacts
      * @return the list of future meeting(s) scheduled with this contact
      * @throws IllegalArgumentException if the contact does not exist *//*
+     *
     List<Meeting> getFutureMeetingList(Contact contact);
 
     *//**
@@ -59,6 +62,7 @@ public interface ContactManager {
      *
      * @param date the date
      * @return the list of meetings *//*
+     *
     List<Meeting> getFutureMeetingList(Calendar date);
 
     *//**
@@ -70,19 +74,21 @@ public interface ContactManager {
      * @param contact one of the user’s contacts
      * @return the list of future meeting(s) scheduled with this contact (maybe empty).
      * @throws IllegalArgumentException if the contact does not exist*//*
+     *
     List<PastMeeting> getPastMeetingList(Contact contact);
 
-    *//**
+    *//*
      * Create a new record for a meeting that took place in the past*
      * @param contacts a list of participants
      * @param date the date on which the meeting took place
      * @param text messages to be added about the meeting.
      * @throws IllegalArgumentException if the list of contacts is
      * empty, or any of the contacts does not exist
-     * @throws NullPointerException if any of the arguments is null *//*
+     * @throws NullPointerException if any of the arguments is null **/
+
     void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text);
 
-    *//**
+    /*
      * Add notes to a meeting.
      * This method is used when a future meeting takes place, and is
      * then converted to a past meeting (with notes). *
