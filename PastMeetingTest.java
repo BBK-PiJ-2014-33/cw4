@@ -43,6 +43,7 @@ public class PastMeetingTest {
         myPastMeetingClass.addNotes("note1");
         myPastMeetingClass.addNotes("note2");
         myPastMeetingClass.addNotes("note3");
+        String output = myPastMeetingClass.getNotes();
 
         assertEquals(myPastMeetingClass.getNotes(), expected);
     }
