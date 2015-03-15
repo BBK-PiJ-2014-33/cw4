@@ -168,7 +168,7 @@ public class ContactManagerTest {
     @Test(expected = NullPointerException.class)
     public void testGetContactsStringNull() throws Exception {
 
-        myContactManagerClass.getContacts("Anna Jones");
+        myContactManagerClass.getContacts(null);
     }
 
     @Test

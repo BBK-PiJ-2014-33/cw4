@@ -1,6 +1,4 @@
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ContactManagerImpl implements ContactManager
 {
@@ -74,7 +72,22 @@ public class ContactManagerImpl implements ContactManager
      */
     public Set<Contact> getContacts(String name)
     {
-        return myContacts;
+        if(name == null)
+        {
+            throw new NullPointerException("Parameters can not be null");
+        }
+        Set<Contact> myMatchingNameSet = new HashSet<Contact>();
+        String ContactName;
+
+        while(myContacts.iterator().hasNext())
+        {
+            ContactName = myContacts.iterator().next().getName();
+            if(ContactName.contains(name))
+            {
+                myMatchingNameSet.add( myContacts.iterator().next());
+            }
+        }
+        return myMatchingNameSet;
     }
 
 
