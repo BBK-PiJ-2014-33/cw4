@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class ContactManagerTest {
-    ContactManager myContactManagerClass;
+    ContactManagerImpl myContactManagerClass;
     Calendar myDate;
     private Set<Contact> myContacts;
     private Set<Contact> myPastMeetingContacts;
@@ -70,7 +70,7 @@ public class ContactManagerTest {
         int myPastMeetingID;
         PastMeeting expected;
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate,"");
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate,myContactManagerClass.getGlobalMeetingID(),"");
         expected = myPastMeeting;
         myPastMeetingID = myPastMeeting.getId();
         assertEquals(myContactManagerClass.getPastMeeting(myPastMeetingID), expected);

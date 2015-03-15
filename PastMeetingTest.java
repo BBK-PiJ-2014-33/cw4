@@ -12,6 +12,7 @@ public class PastMeetingTest {
     private PastMeetingImpl myPastMeetingClass;
     private Set<Contact> myContacts;
     Calendar myDate;
+    ContactManagerImpl myContactManager;
 
     @Before
     public void setUp() throws Exception {
@@ -23,7 +24,8 @@ public class PastMeetingTest {
         {
             myContacts.add(new ContactImpl(Names[i]));
         }
-        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate,"");
+        myContactManager = new ContactManagerImpl(myContacts);
+        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate,myContactManager.getGlobalMeetingID(),"");
 
     }
 

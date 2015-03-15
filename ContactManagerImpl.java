@@ -6,6 +6,7 @@ public class ContactManagerImpl implements ContactManager
 {
     private Set<Contact> myContacts;
     private Set<Meeting> myMeetings;
+    private static int GlobalMeetingID=1;
 
     public ContactManagerImpl (Set<Contact> contacts)
     {
@@ -14,8 +15,15 @@ public class ContactManagerImpl implements ContactManager
         myContacts.addAll(contacts);
     }
 
+    public int getGlobalMeetingID()
+    {
+        int myGlobalMeetingID = GlobalMeetingID;
+        GlobalMeetingID++;
+        return myGlobalMeetingID;
+    }
+
     public int addFutureMeeting(Set<Contact> contacts, Calendar date){
-        FutureMeeting myFutureMeeting = new FutureMeetingImpl(contacts, date);
+        FutureMeeting myFutureMeeting = new FutureMeetingImpl(contacts, date, getGlobalMeetingID());
         if(date.before(Calendar.getInstance())){
 
             throw new IllegalArgumentException("Can not create future meeting in past!");
@@ -36,7 +44,7 @@ public class ContactManagerImpl implements ContactManager
      */
     public PastMeeting getPastMeeting(int id)
     {
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance(), "");
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance(), this.getGlobalMeetingID(),"");
         return myPastMeeting;
     }
 
@@ -53,7 +61,7 @@ public class ContactManagerImpl implements ContactManager
         else if((contacts==null)||date==null||text==null) {
             throw new NullPointerException("Parameters can not be null");
         }
-            PastMeeting myPastMeeting = new PastMeetingImpl(contacts, date, text);
+            PastMeeting myPastMeeting = new PastMeetingImpl(contacts, date, this.getGlobalMeetingID(),text);
             myMeetings.add(myPastMeeting);
     }
 
