@@ -12,6 +12,7 @@ public class ContactManagerTest {
     ContactManager myContactManagerClass;
     Calendar myDate;
     private Set<Contact> myContacts;
+    private Set<Contact> myPastMeetingContacts;
 
     @Before
     public void setUp() throws Exception
@@ -19,10 +20,13 @@ public class ContactManagerTest {
         int numberOfContacts = 5;
         myDate = Calendar.getInstance();
         myContacts = new HashSet<Contact>();
+        myPastMeetingContacts  = new HashSet<Contact>();
         String [] Names = {"Anna Jones", "David Crampton", "Maria Garcia", "Nick White", "Scott Goldstone"};
+
         for (int i = 0; i < numberOfContacts; i++)
         {
             myContacts.add(new ContactImpl(Names[i]));
+            myPastMeetingContacts.add(new ContactImpl(Names[i]));
         }
         myContactManagerClass = new ContactManagerImpl(myContacts);
 
@@ -44,6 +48,7 @@ public class ContactManagerTest {
         myFutureMeetingContacts = new HashSet<Contact>();
         int numberOfContacts = 5;
         String [] Names = {"Anna Jones", "David Crampton", "Maria Garcia", "Nick White", "Scott Goldstone"};
+
         for (int i = 0; i < numberOfContacts; i++)
         {
             myFutureMeetingContacts.add(new ContactImpl(Names[i]));
@@ -65,7 +70,7 @@ public class ContactManagerTest {
         int myPastMeetingID;
         PastMeeting expected;
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate);
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate,"");
         expected = myPastMeeting;
         myPastMeetingID = myPastMeeting.getId();
         assertEquals(myContactManagerClass.getPastMeeting(myPastMeetingID), expected);
@@ -82,17 +87,9 @@ public class ContactManagerTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testAddNewPastMeetingContactDoesNotExist() {
-        Set<Contact> myPastMeetingContacts;
+
         Calendar myPastDate = Calendar.getInstance();
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        myPastMeetingContacts = new HashSet<Contact>();
-
-        int numberOfContacts = 5;
-        String [] Names = {"Anna Jones", "David Crampton", "Maria Garcia", "Nick White", "Scott Goldstone"};
-        for (int i = 0; i < numberOfContacts; i++)
-        {
-            myPastMeetingContacts.add(new ContactImpl(Names[i]));
-        }
         myPastMeetingContacts.add(new ContactImpl("Emily Storey"));
         myContactManagerClass.addNewPastMeeting(myPastMeetingContacts, myPastDate, "meeting took place");
 
@@ -101,11 +98,10 @@ public class ContactManagerTest {
     @Test(expected = NullPointerException.class)
     public void testAddNewPastMeetingNullArgument()
     {
-        Set<Contact> myPastMeetingContacts;
-        myPastMeetingContacts = new HashSet<Contact>();
-        Calendar myPastDate = Calendar.getInstance();
+        Calendar myPastDate =Calendar.getInstance();
+        String myNotes = null;
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        myContactManagerClass.addNewPastMeeting(myPastMeetingContacts, myPastDate, "meeting took place");
+        myContactManagerClass.addNewPastMeeting(myContacts, myPastDate, myNotes);
     }
 
 

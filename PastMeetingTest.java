@@ -23,7 +23,7 @@ public class PastMeetingTest {
         {
             myContacts.add(new ContactImpl(Names[i]));
         }
-        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate);
+        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate,"");
 
     }
 

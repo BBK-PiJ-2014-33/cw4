@@ -36,13 +36,25 @@ public class ContactManagerImpl implements ContactManager
      */
     public PastMeeting getPastMeeting(int id)
     {
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance());
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance(), "");
         return myPastMeeting;
     }
 
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text)
     {
-
+        if(contacts.isEmpty())
+        {
+            throw new IllegalArgumentException("Contacts for this past meeting are empty");
+        }
+        else if(!myContacts.containsAll(contacts))
+        {
+            throw new IllegalArgumentException("Contact list provided contains non-existent contact");
+        }
+        else if((contacts==null)||date==null||text==null) {
+            throw new NullPointerException("Parameters can not be null");
+        }
+            PastMeeting myPastMeeting = new PastMeetingImpl(contacts, date, text);
+            myMeetings.add(myPastMeeting);
     }
 
 }

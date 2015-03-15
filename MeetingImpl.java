@@ -7,7 +7,7 @@ public class MeetingImpl implements Meeting {
     private int myMeetingId;
     private Calendar myDate;
     private Set<Contact> myContacts;
-    protected String myNotes;
+
 
     public MeetingImpl(Set<Contact> Contacts, Calendar meetingDate)
     {
@@ -15,7 +15,7 @@ public class MeetingImpl implements Meeting {
         GlobalMeetingID++;
         myContacts = Contacts;
         myDate = meetingDate;
-        myNotes = "";
+
     }
 
     public int getId()
@@ -33,12 +33,5 @@ public class MeetingImpl implements Meeting {
         return myContacts;
     }
 
-    public void addNotes(String note)
-    {
-        StringBuilder st = new StringBuilder(myNotes);
-        st.append(note);
-        st.append(System.getProperty("line.separator"));
-        myNotes = st.toString();
-    }
 }
 
