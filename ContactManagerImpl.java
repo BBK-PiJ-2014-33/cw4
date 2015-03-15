@@ -65,4 +65,17 @@ public class ContactManagerImpl implements ContactManager
             myMeetings.add(myPastMeeting);
     }
 
+    /**
+     * Returns a list with the contacts whose name contains that string.
+     * *
+     * @param name the string to search for
+     * @return a list with the contacts whose name contains that string.
+     * @throws NullPointerException if the parameter is null
+     */
+    public Set<Contact> getContacts(String name)
+    {
+        return myContacts;
+    }
+
+
 }

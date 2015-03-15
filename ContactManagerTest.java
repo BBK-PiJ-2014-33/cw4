@@ -21,7 +21,7 @@ public class ContactManagerTest {
         myDate = Calendar.getInstance();
         myContacts = new HashSet<Contact>();
         myPastMeetingContacts  = new HashSet<Contact>();
-        String [] Names = {"Anna Jones", "David Crampton", "Maria Garcia", "Nick White", "Scott Goldstone"};
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
 
         for (int i = 0; i < numberOfContacts; i++)
         {
@@ -60,7 +60,9 @@ public class ContactManagerTest {
     @Test
     public void testAddFutureMeetingNotNull() throws Exception
     {
-        assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myDate));
+        Calendar myFutureDate = Calendar.getInstance();
+        myFutureDate.set(2016,Calendar.JANUARY, 30);
+        assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
     }
 
     @Test
@@ -105,7 +107,7 @@ public class ContactManagerTest {
     }
 
 
-/*
+
     @Test
     public void testGetFutureMeeting() throws Exception {
 
@@ -132,7 +134,6 @@ public class ContactManagerTest {
     }
 
 
-
     @Test
     public void testAddMeetingNotes() throws Exception {
 
@@ -144,8 +145,30 @@ public class ContactManagerTest {
     }
 
     @Test
-    public void testGetContacts() throws Exception {
+    public void testGetContactsString() throws Exception {
+        ContactManagerImpl myLocalContactManagerClass;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> expected = new HashSet<Contact>();
+        int numberOfContacts = 2;
 
+        String [] Names = {"Anna Jones", "Maria Jones"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            Contact myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            expected.add(myContact);
+        }
+
+        myLocalContacts.add(new ContactImpl("David Crampton"));
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        assertEquals(myLocalContactManagerClass.getContacts("Jones"), expected);
+    }
+
+    @Test(expected = NullPointerException.class)
+    public void testGetContactsStringNull() throws Exception {
+
+        myContactManagerClass.getContacts("Anna Jones");
     }
 
     @Test
@@ -157,4 +180,4 @@ public class ContactManagerTest {
     public void testFlush() throws Exception {
 
     }
-*/}
+}
