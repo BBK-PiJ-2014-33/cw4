@@ -24,4 +24,16 @@ public class ContactManagerImpl implements ContactManager
         }
         return myFutureMeeting.getId();
     }
+
+    /**
+     * Returns the PAST meeting with the requested ID, or null if it there is none. *
+     * @param id the ID for the meeting
+     * @return the meeting with the requested ID, or null if it there is none.
+     * @throws IllegalArgumentException if there is a meeting with that ID happening in the future
+     */
+    public PastMeeting getPastMeeting(int id)
+    {
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance());
+        return myPastMeeting;
+    }
 }

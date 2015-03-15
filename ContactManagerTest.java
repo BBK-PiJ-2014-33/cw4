@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ContactManagerTest {
     ContactManager myContactManagerClass;
@@ -57,11 +58,19 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myDate));
     }
 
-   /* @Test
+    @Test
     public void testGetPastMeeting() throws Exception {
 
+        Calendar myPastDate = Calendar.getInstance();
+        int myPastMeetingID;
+        PastMeeting expected;
+        myPastDate.set(1900, Calendar.JANUARY, 30);
+        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate);
+        expected = myPastMeeting;
+        myPastMeetingID = myPastMeeting.getId();
+        assertEquals(myContactManagerClass.getPastMeeting(myPastMeetingID), expected);
     }
-
+/*
     @Test
     public void testGetFutureMeeting() throws Exception {
 
