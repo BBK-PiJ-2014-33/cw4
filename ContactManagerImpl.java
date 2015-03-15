@@ -24,6 +24,7 @@ public class ContactManagerImpl implements ContactManager
         {
             throw new IllegalArgumentException("Contact list provided contains unknown / non-existent contact");
         }
+        myMeetings.add(myFutureMeeting);
         return myFutureMeeting.getId();
     }
 
@@ -38,15 +39,6 @@ public class ContactManagerImpl implements ContactManager
         PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance());
         return myPastMeeting;
     }
-
-    /**
-     * Create a new record for a meeting that took place in the past*
-     * @param contacts a list of participants
-     * @param date the date on which the meeting took place
-     * @param text messages to be added about the meeting.
-     * @throws IllegalArgumentException if the list of contacts is
-     * empty, or any of the contacts does not exist
-     * @throws NullPointerException if any of the arguments is null **/
 
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text)
     {
