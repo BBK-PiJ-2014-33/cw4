@@ -106,8 +106,8 @@ public interface ContactManager {
      * @param name the name of the contact.
      * @param notes notes to be added about the contact.
      * @throws NullPointerException if the name or the notes are null
-     *//*
-    void addNewContact(String name, String notes);*/
+     */
+    void addNewContact(String name, String notes);
 
     /**
      * Returns a list containing the contacts that corresponds to the IDs*

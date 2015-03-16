@@ -139,9 +139,20 @@ public class ContactManagerTest {
 
     }
 
+
+    @Test(expected = NullPointerException.class)
+    public void testAddNewContactNameOrNotesNull() throws Exception {
+        myContactManagerClass.addNewContact("Anna Kent", null);
+        myContactManagerClass.addNewContact(null, "test notes");
+        myContactManagerClass.addNewContact(null, null);
+    }
     @Test
     public void testAddNewContact() throws Exception {
 
+        Set<Contact> myMatchingContacts = new HashSet<Contact>();
+        myContactManagerClass.addNewContact("Anna Kent", "test notes");
+        myMatchingContacts = myContactManagerClass.getContacts("Anna Kent");
+        assertFalse(myMatchingContacts.isEmpty());
     }
 
     @Test
