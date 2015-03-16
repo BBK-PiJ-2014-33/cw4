@@ -37,7 +37,7 @@ public class ContactManagerTest {
     {
         Calendar myPastDate = Calendar.getInstance();
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        myContactManagerClass.addFutureMeeting(myContacts,myDate);
+        myContactManagerClass.addFutureMeeting(myContacts,myPastDate);
 
     }
 
@@ -65,18 +65,30 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
     }
 
+
+    /**
+     * Returns the PAST meeting with the requested ID, or null if it there is none. *
+     * @param id the ID for the meeting
+     * @return the meeting with the requested ID, or null if it there is none.
+     * @throws IllegalArgumentException if there is a meeting with that ID happening in the future
+     *//*
+
+    @Test
+    public void testGetPastMeetingFutureMeetingID() throws Exception {
+        int myFutureMeetingID;
+        Calendar myFutureDate = Calendar.getInstance();
+        myFutureDate.set(2016,Calendar.JANUARY, 30);
+        myFutureMeetingID = myContactManagerClass.addFutureMeeting(myContacts,myFutureDate);
+        assertNull(myContactManagerClass.getPastMeeting(myFutureMeetingID));
+    }
     @Test
     public void testGetPastMeeting() throws Exception {
 
+        ContactManager myLocalContactManager = new ContactManagerImpl(myContacts);
         Calendar myPastDate = Calendar.getInstance();
-        int myPastMeetingID;
-        PastMeeting expected;
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, myPastDate,myContactManagerClass.getGlobalMeetingID(),"");
-        expected = myPastMeeting;
-        myPastMeetingID = myPastMeeting.getId();
-        assertEquals(myContactManagerClass.getPastMeeting(myPastMeetingID), expected);
-    }
+        myLocalContactManager.addNewPastMeeting(myContacts, myPastDate,"new past meeting created in testGetPastMeeting");
+    }*/
 
     @Test(expected = IllegalArgumentException.class)
       public void testAddNewPastMeetingEmptyContact() {
@@ -114,8 +126,22 @@ public class ContactManagerTest {
     }
 
     @Test
-    public void testGetMeeting() throws Exception {
+    public void testGetMeetingDoesNotExist() throws Exception {
+        assertNull(myContactManagerClass.getMeeting(0));
+    }
 
+    @Test
+    public void testGetMeeting() throws Exception {
+        int myFutureMeetingID;
+        int expected, output;
+        Meeting myTestMeeting;
+        Calendar myFutureDate = Calendar.getInstance();
+        myFutureDate.set(2016,Calendar.JANUARY, 30);
+        myFutureMeetingID = myContactManagerClass.addFutureMeeting(myContacts,myFutureDate);
+        expected = myFutureMeetingID;
+        myTestMeeting = myContactManagerClass.getMeeting(myFutureMeetingID);
+        output = myTestMeeting.getId();
+        assertEquals(output,expected);
     }
 
     @Test

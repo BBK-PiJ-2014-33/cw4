@@ -46,6 +46,19 @@ public class ContactManagerImpl implements ContactManager
         return myPastMeeting;
     }
 
+    /*
+     * Returns the meeting with the requested ID, or null if it there is none.
+     * *
+     * @param id the ID for the meeting
+     * @return the meeting with the requested ID, or null if it there is none.
+     */
+    public Meeting getMeeting(int id)
+    {
+        Meeting myMeeting = new MeetingImpl(myContacts,Calendar.getInstance(), this.getGlobalMeetingID());
+        return myMeeting;
+    }
+
+
     public void addNewPastMeeting(Set<Contact> contacts, Calendar date, String text)
     {
         if(contacts.isEmpty())
