@@ -79,12 +79,12 @@ public class ContactManagerImpl implements ContactManager
         Set<Contact> myMatchingNameSet = new HashSet<Contact>();
         String ContactName;
 
-        while(myContacts.iterator().hasNext())
+        for (Contact c: myContacts)
         {
-            ContactName = myContacts.iterator().next().getName();
+            ContactName = c.getName();
             if(ContactName.contains(name))
             {
-                myMatchingNameSet.add( myContacts.iterator().next());
+                myMatchingNameSet.add(c);
             }
         }
         return myMatchingNameSet;
