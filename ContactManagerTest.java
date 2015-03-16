@@ -141,9 +141,15 @@ public class ContactManagerTest {
 
 
     @Test(expected = NullPointerException.class)
-    public void testAddNewContactNameOrNotesNull() throws Exception {
+    public void testAddNewContactNameNull() throws Exception {
         myContactManagerClass.addNewContact("Anna Kent", null);
+    }
+    @Test(expected = NullPointerException.class)
+    public void testAddNewContactNotesNull() throws Exception {
         myContactManagerClass.addNewContact(null, "test notes");
+    }
+    @Test(expected = NullPointerException.class)
+    public void testAddNewContactNameAndNotesNull() throws Exception {
         myContactManagerClass.addNewContact(null, null);
     }
     @Test

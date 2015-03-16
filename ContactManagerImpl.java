@@ -63,16 +63,15 @@ public class ContactManagerImpl implements ContactManager
             myMeetings.add(myPastMeeting);
     }
 
-    /**
-     * Create a new contact with the specified name and notes.
-     *
-     * @param name the name of the contact.
-     * @param notes notes to be added about the contact.
-     * @throws NullPointerException if the name or the notes are null
-     */
     public void addNewContact(String name, String notes)
     {
-
+        if(name==null || notes == null )
+        {
+            throw new NullPointerException("Parameters can not be null");
+        }
+        Contact myNewContact = new ContactImpl(name);
+        myNewContact.addNotes(notes);
+        myContacts.add(myNewContact);
     }
 
     public Set<Contact> getContacts(String name)
