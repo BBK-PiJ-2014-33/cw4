@@ -146,7 +146,29 @@ public class ContactManagerImpl implements ContactManager
          * @throws IllegalArgumentException if any of the IDs does not correspond to a real contact
          * */
     public Set<Contact> getContacts(int... ids){
-        return myContacts;
+
+        Set<Contact> myMatchingContacts = new HashSet<Contact>();
+        Set<Integer> myContactManagerIds = new HashSet<Integer>();
+        Set<Integer> myQueryIds = new HashSet<Integer>();
+        int ContactId;
+        for (int i = 0; i < ids.length; i++) {
+            myQueryIds.add(ids[i]);
+        }
+        for (Contact c: myContacts)
+        {
+            ContactId = c.getId();
+            myContactManagerIds.add(ContactId);
+            for (int i = 0; i < ids.length; i++) {
+                if (ContactId == ids[i]) {
+                    myMatchingContacts.add(c);
+                }
+            }
+        }
+        if(!myContactManagerIds.containsAll(myQueryIds))
+        {
+            throw new IllegalArgumentException("Contact ids provided contains non-existent contact id");
+        }
+        return myMatchingContacts;
     }
     /*
     Guidance from forum by KEITH MANNOCK  Post 4 in reply to 3  • 23 February 2015, 2:02 PM

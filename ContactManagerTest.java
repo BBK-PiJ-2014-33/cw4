@@ -287,7 +287,7 @@ public class ContactManagerTest {
         }
 
         myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
-        assertEquals(myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 ), expected);
+        expected = myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 );
     }
 
     @Test
