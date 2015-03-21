@@ -14,6 +14,7 @@ public class ContactManagerTest {
     Calendar myDate;
     private Set<Contact> myContacts;
     private Set<Contact> myPastMeetingContacts;
+    private int myPastMeetingId;
 
     @Before
     public void setUp() throws Exception
@@ -64,6 +65,39 @@ public class ContactManagerTest {
         Calendar myFutureDate = Calendar.getInstance();
         myFutureDate.set(2016,Calendar.JANUARY, 30);
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testAddMeetingNotesMeetingDoesNotExist() throws Exception {
+        myContactManagerClass.addMeetingNotes(0,"adding meeting notes");
+    }
+    @Test(expected = IllegalStateException.class)
+    public void testAddMeetingNotesMeetingSetForDateInFuture() throws Exception {
+        int myMeetingId;
+        Calendar myFutureDate = Calendar.getInstance();
+        myFutureDate.set(2016,Calendar.JANUARY, 30);
+        myMeetingId = myContactManagerClass.addFutureMeeting(myContacts,myFutureDate);
+        myContactManagerClass.addMeetingNotes(myMeetingId,"adding meeting notes");
+    }
+    @Test(expected = NullPointerException.class)
+    public void testAddMeetingNotesNullNotes() throws Exception {
+        int myMeetingId;
+        String myNotes = null;
+        myMeetingId = myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addMeetingNotes(myMeetingId,myNotes);
+    }
+    @Test
+    public void testAddMeetingNotes() throws Exception {
+        int myMeetingId;
+        String expected = "adding meeting notes";
+        PastMeeting myPastMeeting;
+        myMeetingId = myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addMeetingNotes(myMeetingId,expected);
+        myPastMeetingId = myMeetingId;
+        myPastMeeting = myContactManagerClass.getPastMeeting(myMeetingId);
+        assertEquals(myPastMeeting.getNotes(),expected);
     }
 
     /*
@@ -183,11 +217,6 @@ public class ContactManagerTest {
 
     }
 
-
-    @Test
-    public void testAddMeetingNotes() throws Exception {
-
-    }
 
 
     @Test(expected = NullPointerException.class)

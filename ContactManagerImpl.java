@@ -139,12 +139,21 @@ public class ContactManagerImpl implements ContactManager
         myContacts.add(myNewContact);
     }
 
-    /*
-         * Returns a list containing the contacts that corresponds to the IDs*
-         * @param ids an arbitrary number of contact IDs
-         * @return a list containing the contacts that correspond to the IDs.
-         * @throws IllegalArgumentException if any of the IDs does not correspond to a real contact
-         * */
+     /*
+     * Add notes to a meeting.
+     * This method is used when a future meeting takes place, and is
+     * then converted to a past meeting (with notes). *
+     * It can be also used to add notes to a past meeting at a later date. *
+     * @param id the ID of the meeting
+     * @param text messages to be added about the meeting.
+     * @throws IllegalArgumentException if the meeting does not exist
+     * @throws IllegalStateException if the meeting is set for a date in the future
+     * @throws NullPointerException if the notes are null */
+
+    public void addMeetingNotes(int id, String text)
+    {
+
+    }
     public Set<Contact> getContacts(int... ids){
 
         Set<Contact> myMatchingContacts = new HashSet<Contact>();

@@ -97,8 +97,8 @@ public interface ContactManager {
      * @param text messages to be added about the meeting.
      * @throws IllegalArgumentException if the meeting does not exist
      * @throws IllegalStateException if the meeting is set for a date in the future
-     * @throws NullPointerException if the notes are null *//*
-     *
+     * @throws NullPointerException if the notes are null */
+
     void addMeetingNotes(int id, String text);
 
     /**
