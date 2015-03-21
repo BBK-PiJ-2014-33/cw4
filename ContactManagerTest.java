@@ -134,7 +134,7 @@ public class ContactManagerTest {
     public void testGetMeetingContactManagerWithNoMeetings() throws Exception {
         ContactManager myLocalContactManagerClass;
         myLocalContactManagerClass = new ContactManagerImpl(myContacts);
-        assertNull(myContactManagerClass.getMeeting(0));
+        assertNull(myLocalContactManagerClass.getMeeting(0));
     }
 
     @Test
