@@ -213,7 +213,7 @@ public class ContactManagerTest {
 
     @Test
     public void testGetContactsString() throws Exception {
-        ContactManagerImpl myLocalContactManagerClass;
+        ContactManager myLocalContactManagerClass;
         Set<Contact> myLocalContacts = new HashSet<Contact>();
         Set<Contact> expected = new HashSet<Contact>();
         int numberOfContacts = 2;
@@ -241,12 +241,53 @@ public class ContactManagerTest {
     @Test(expected = NullPointerException.class)
     public void testGetContactsStringNull() throws Exception {
 
-        myContactManagerClass.getContacts(null);
+        String myTestString = null;
+        myContactManagerClass.getContacts(myTestString);
     }
 
     @Test
-    public void testGetContacts1() throws Exception {
+    public void testGetContactsArbitraryIds() throws Exception {
+        ContactManager myLocalContactManagerClass;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> expected = new HashSet<Contact>();
+        int numberOfContacts = 3;
+        int [] myContactIDs = new int [3];
 
+        String [] Names = {"Anna Jones", "Maria Jones", "David Crampton"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            Contact myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            expected.add(myContact);
+            myContactIDs[i] = myContact.getId();
+        }
+
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        myLocalContactManagerClass.addNewContact("Tom Walters", "producer");
+        assertEquals(myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],myContactIDs[2] ), expected);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetContactsNotRealContactID() throws Exception {
+        ContactManager myLocalContactManagerClass;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> expected = new HashSet<Contact>();
+        int numberOfContacts = 3;
+        int [] myContactIDs = new int [3];
+
+        String [] Names = {"Anna Jones", "Maria Jones", "David Crampton"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            Contact myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            expected.add(myContact);
+            myContactIDs[i] = myContact.getId();
+        }
+
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        assertEquals(myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 ), expected);
     }
 
     @Test

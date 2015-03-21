@@ -11,14 +11,6 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
         myNotes = notes;
     }
 
-    public void addNotes(String note)
-    {
-        StringBuilder st = new StringBuilder(myNotes);
-        st.append(note);
-        st.append(System.getProperty("line.separator"));
-        myNotes = st.toString();
-    }
-
     public String getNotes()
     {
         return myNotes;

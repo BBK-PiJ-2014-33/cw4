@@ -139,7 +139,15 @@ public class ContactManagerImpl implements ContactManager
         myContacts.add(myNewContact);
     }
 
-
+    /*
+         * Returns a list containing the contacts that corresponds to the IDs*
+         * @param ids an arbitrary number of contact IDs
+         * @return a list containing the contacts that correspond to the IDs.
+         * @throws IllegalArgumentException if any of the IDs does not correspond to a real contact
+         * */
+    public Set<Contact> getContacts(int... ids){
+        return myContacts;
+    }
     /*
     Guidance from forum by KEITH MANNOCK  Post 4 in reply to 3  • 23 February 2015, 2:02 PM
 
