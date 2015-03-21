@@ -9,7 +9,7 @@ import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
 public class ContactManagerTest {
-    ContactManagerImpl myContactManagerClass;
+    ContactManager myContactManagerClass;
     Calendar myDate;
     private Set<Contact> myContacts;
     private Set<Contact> myPastMeetingContacts;
@@ -127,6 +127,13 @@ public class ContactManagerTest {
 
     @Test
     public void testGetMeetingDoesNotExist() throws Exception {
+        assertNull(myContactManagerClass.getMeeting(0));
+    }
+
+    @Test
+    public void testGetMeetingContactManagerWithNoMeetings() throws Exception {
+        ContactManager myLocalContactManagerClass;
+        myLocalContactManagerClass = new ContactManagerImpl(myContacts);
         assertNull(myContactManagerClass.getMeeting(0));
     }
 
