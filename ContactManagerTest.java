@@ -209,6 +209,12 @@ public class ContactManagerTest {
     }
 
     @Test(expected = NullPointerException.class)
+    public void testGetContactsStringEmpty() throws Exception {
+
+        myContactManagerClass.getContacts("");
+    }
+
+    @Test(expected = NullPointerException.class)
     public void testGetContactsStringNull() throws Exception {
 
         myContactManagerClass.getContacts(null);

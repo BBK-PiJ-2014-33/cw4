@@ -34,6 +34,27 @@ public class ContactManagerImpl implements ContactManager
         return myFutureMeeting.getId();
     }
 
+    /*
+    Guidance from forum by SERGIO GUTIERREZ-SANTOSPost 3 in reply to 1  • 15 December 2014, 5:23 PM
+
+    The method must return also past meetings if it is called with a past date as parameter.
+
+    The name is confusing, a better name would have been getMeetingList(Calendar) or even getMeetingListOn(Calendar). We apologise for the confusion.
+
+    The meetings must be sorted by time (meetings take place on date and at a time, e.g. on 12-Dec-2013 @ 11h00).
+
+    ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
+     * Returns the list of meetings that are scheduled for, or that took
+     * place on, the specified date
+     * If there are none, the returned list will be empty. Otherwise,
+     * the list will be chronologically sorted and will not contain any duplicates.
+     *
+     * @param date the date
+     * @return the list of meetings
+
+     List<Meeting> getFutureMeetingList(Calendar date);
+     */
+
     /**
      * Returns the PAST meeting with the requested ID, or null if it there is none. *
      * @param id the ID for the meeting
@@ -87,6 +108,12 @@ public class ContactManagerImpl implements ContactManager
         myContacts.add(myNewContact);
     }
 
+
+    /*
+    Guidance from forum by KEITH MANNOCK  Post 4 in reply to 3  • 23 February 2015, 2:02 PM
+
+    The null argument throws an exception and so should the empty string.
+     */
     public Set<Contact> getContacts(String name)
     {
         if(name == null)
@@ -106,6 +133,5 @@ public class ContactManagerImpl implements ContactManager
         }
         return myMatchingNameSet;
     }
-
 
 }
