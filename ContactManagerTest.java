@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.Calendar;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
@@ -65,30 +66,24 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
     }
 
-
-    /**
-     * Returns the PAST meeting with the requested ID, or null if it there is none. *
-     * @param id the ID for the meeting
-     * @return the meeting with the requested ID, or null if it there is none.
-     * @throws IllegalArgumentException if there is a meeting with that ID happening in the future
-     *//*
-
-    @Test
+    /*
+    @Test(expected = IllegalArgumentException.class)
     public void testGetPastMeetingFutureMeetingID() throws Exception {
         int myFutureMeetingID;
         Calendar myFutureDate = Calendar.getInstance();
         myFutureDate.set(2016,Calendar.JANUARY, 30);
         myFutureMeetingID = myContactManagerClass.addFutureMeeting(myContacts,myFutureDate);
-        assertNull(myContactManagerClass.getPastMeeting(myFutureMeetingID));
+        myContactManagerClass.getPastMeeting(myFutureMeetingID);
     }
     @Test
     public void testGetPastMeeting() throws Exception {
-
         ContactManager myLocalContactManager = new ContactManagerImpl(myContacts);
+        int myPastMeetingId;
         Calendar myPastDate = Calendar.getInstance();
         myPastDate.set(1900, Calendar.JANUARY, 30);
-        myLocalContactManager.addNewPastMeeting(myContacts, myPastDate,"new past meeting created in testGetPastMeeting");
-    }*/
+        myLocalContactManager.addNewPastMeeting(myContacts, myPastDate, "new past meeting created in testGetPastMeeting");
+    }
+    */
 
     @Test(expected = IllegalArgumentException.class)
       public void testAddNewPastMeetingEmptyContact() {
@@ -119,10 +114,29 @@ public class ContactManagerTest {
     }
 
 
+    @Test
+    public void testGetFutureMeetingDoesNotExist() throws Exception {
+        assertNull(myContactManagerClass.getFutureMeeting(0));
+    }
 
     @Test
     public void testGetFutureMeeting() throws Exception {
-
+        int expected, output;
+        FutureMeeting myFutureMeeting;
+        Calendar myFutureDate = Calendar.getInstance();
+        myFutureDate.set(2016,Calendar.JANUARY, 30);
+        expected = myContactManagerClass.addFutureMeeting(myContacts,myFutureDate);
+        myFutureMeeting = myContactManagerClass.getFutureMeeting(expected);
+        output = myFutureMeeting.getId();
+        assertEquals(output,expected);
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetFutureMeetingHappeningInPast() throws Exception {
+        int myMeetingId;
+        FutureMeeting myFutureMeeting;
+        myMeetingId = myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myFutureMeeting = myContactManagerClass.getFutureMeeting(myMeetingId);
     }
 
     @Test

@@ -44,16 +44,28 @@ public class ContactManagerImpl implements ContactManager
     The meetings must be sorted by time (meetings take place on date and at a time, e.g. on 12-Dec-2013 @ 11h00).
 
     ---------------------------------------------------------------------------------------------------------------------------------------------------------------------
-     * Returns the list of meetings that are scheduled for, or that took
-     * place on, the specified date
-     * If there are none, the returned list will be empty. Otherwise,
-     * the list will be chronologically sorted and will not contain any duplicates.
-     *
-     * @param date the date
-     * @return the list of meetings
+    *//**
+    * Returns the list of meetings that are scheduled for, or that took
+    * place on, the specified date
+    * If there are none, the returned list will be empty. Otherwise,
+    * the list will be chronologically sorted and will not contain any duplicates.
+    *
+    * @param date the date
+    * @return the list of meetings *//*
 
-     List<Meeting> getFutureMeetingList(Calendar date);
+    List<Meeting> getFutureMeetingList(Calendar date);
+
+     /*
+     * Returns the FUTURE meeting with the requested ID, or null if there is none. *
+     * @param id the ID for the meeting
+     * @return the meeting with the requested ID, or null if it there is none.
+     * @throws IllegalArgumentException if there is a meeting with that ID happening in the past
      */
+    public FutureMeeting getFutureMeeting(int id)
+    {
+        FutureMeeting myFutureMeeting= new FutureMeetingImpl(myContacts,Calendar.getInstance(), this.getGlobalMeetingID());
+        return myFutureMeeting;
+    }
 
     /**
      * Returns the PAST meeting with the requested ID, or null if it there is none. *
