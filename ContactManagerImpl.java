@@ -75,9 +75,18 @@ public class ContactManagerImpl implements ContactManager
      */
     public Meeting getMeeting(int id)
     {
-        Meeting myMeeting = new MeetingImpl(myContacts,Calendar.getInstance(), this.getGlobalMeetingID());
-        return myMeeting;
-
+        if (myMeetings.isEmpty())
+        {
+            return null;
+        }
+        else {
+            for (Meeting m : myMeetings) {
+                if (m.getId() == id) {
+                    return m;
+                }
+            }
+        }
+        return null;
     }
 
 
