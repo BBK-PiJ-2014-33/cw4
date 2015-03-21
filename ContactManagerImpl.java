@@ -116,9 +116,9 @@ public class ContactManagerImpl implements ContactManager
      */
     public Set<Contact> getContacts(String name)
     {
-        if(name == null)
+        if(name == null || name.isEmpty())
         {
-            throw new NullPointerException("Parameters can not be null");
+            throw new NullPointerException("Parameters can not be null or empty");
         }
         Set<Contact> myMatchingNameSet = new HashSet<Contact>();
         String ContactName;
