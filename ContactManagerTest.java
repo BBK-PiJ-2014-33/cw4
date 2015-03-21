@@ -119,6 +119,7 @@ public class ContactManagerTest {
         assertNull(myContactManagerClass.getFutureMeeting(0));
     }
 
+
     @Test
     public void testGetFutureMeeting() throws Exception {
         int expected, output;
@@ -130,6 +131,8 @@ public class ContactManagerTest {
         output = myFutureMeeting.getId();
         assertEquals(output,expected);
     }
+
+
     @Test(expected = IllegalArgumentException.class)
     public void testGetFutureMeetingHappeningInPast() throws Exception {
         int myMeetingId;
