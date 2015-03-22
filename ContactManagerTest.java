@@ -4,6 +4,7 @@ import org.junit.Test;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
 
+
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertEquals;
 
@@ -264,14 +265,6 @@ public class ContactManagerTest {
             assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
         }
     }
-    /*
-     * Returns the list of future meetings scheduled with this contact. *
-     * If there are none, the returned list will be empty. Otherwise,
-     * the list will be chronologically sorted and will not contain any * duplicates.
-     *
-     * @param contact one of the user’s contacts
-     * @return the list of future meeting(s) scheduled with this contact
-     * @throws IllegalArgumentException if the contact does not exist */
 
     @Test
     public void testGetFutureMeetingListContactNoMeetingsWithThisContact() throws Exception {

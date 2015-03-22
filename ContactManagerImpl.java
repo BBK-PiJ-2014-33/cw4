@@ -68,25 +68,36 @@ public class ContactManagerImpl implements ContactManager
             }
         }
         Collections.sort(myList, new Comparator<Meeting>() {
-            public int compare(Meeting o1, Meeting o2) {
-                return o1.getDate().compareTo(o2.getDate());
+            @Override
+            public int compare(Meeting m1, Meeting m2) {
+                return m1.getDate().compareTo(m2.getDate());
             }
         });
             return myList;
     }
 
-    /*
-     * Returns the list of future meetings scheduled with this contact. *
-     * If there are none, the returned list will be empty. Otherwise,
-     * the list will be chronologically sorted and will not contain any * duplicates.
-     *
-     * @param contact one of the user’s contacts
-     * @return the list of future meeting(s) scheduled with this contact
-     * @throws IllegalArgumentException if the contact does not exist */
-
     public List<Meeting> getFutureMeetingList(Contact contact)
     {
-        List <Meeting> myList = null;
+        List <Meeting> myList = new ArrayList();
+        if(!myContacts.contains(contact))
+        {
+            throw new IllegalArgumentException("This contact does not exist");
+        }
+        for (Meeting m : myMeetings)
+        {
+           if(m.getContacts().contains(contact)&& m.getDate().after(Calendar.getInstance()))
+           {
+               myList.add(m);
+           }
+        }
+
+        Collections.sort(myList, new Comparator<Meeting>() {
+            @Override
+            public int compare(Meeting m1, Meeting m2) {
+                return m1.getDate().compareTo(m2.getDate());
+            }
+        });
+
         return myList;
     }
 
