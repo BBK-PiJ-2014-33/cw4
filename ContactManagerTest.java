@@ -264,12 +264,176 @@ public class ContactManagerTest {
             assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
         }
     }
+    /*
+     * Returns the list of future meetings scheduled with this contact. *
+     * If there are none, the returned list will be empty. Otherwise,
+     * the list will be chronologically sorted and will not contain any * duplicates.
+     *
+     * @param contact one of the user’s contacts
+     * @return the list of future meeting(s) scheduled with this contact
+     * @throws IllegalArgumentException if the contact does not exist */
 
     @Test
-    public void testGetFutureMeetingList1() throws Exception {
+    public void testGetFutureMeetingListContactNoMeetingsWithThisContact() throws Exception {
+        List myMeetingList;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> myMeetingContacts = new HashSet<Contact>();
+        Contact myContact;
+        ContactManager myLocalContactManagerClass;
+        int numberOfContacts = 5;
+
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            myMeetingContacts.add(myContact);
+        }
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContacts.add(myContact);
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+        assertTrue(myMeetingList.isEmpty());
+    }
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetFutureMeetingListContactIllegalContact() throws Exception {
+        List myMeetingList;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Contact myContact;
+        ContactManager myLocalContactManagerClass;
+        int numberOfContacts = 5;
+
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+        }
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
+        myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+    }
+    @Test
+    public void testGetFutureMeetingListContactNoDuplicates() throws Exception {
+        List <Meeting> myMeetingList;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> myMeetingContacts = new HashSet<Contact>();
+        Contact myContact;
+        ContactManager myLocalContactManagerClass;
+        int numberOfContacts = 5;
+
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            myMeetingContacts.add(myContact);
+        }
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContacts.add(myContact);
+        myMeetingContacts.add(myContact);
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.MARCH, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.FEBRUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+
+        for (int i = 0; i < myMeetingList.size()-1; i++)
+        {
+            assertNotSame(myMeetingList.get(i), myMeetingList.get(i+1));
+        }
 
     }
+    @Test
+    public void testGetFutureMeetingListContactSorted() throws Exception {
+        List <Meeting> myMeetingList;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> myMeetingContacts = new HashSet<Contact>();
+        Contact myContact;
+        ContactManager myLocalContactManagerClass;
+        int numberOfContacts = 5;
 
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            myMeetingContacts.add(myContact);
+        }
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContacts.add(myContact);
+        myMeetingContacts.add(myContact);
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.MARCH, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.FEBRUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+        for (int i = 0; i < myMeetingList.size()-1; i++)
+        {
+            assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
+        }
+    }
+
+    @Test
+    public void testGetFutureMeetingListContact() throws Exception
+    {
+        List <Meeting> myMeetingList;
+        Set<Contact> myLocalContacts = new HashSet<Contact>();
+        Set<Contact> myMeetingContacts = new HashSet<Contact>();
+        Contact myContact;
+        ContactManager myLocalContactManagerClass;
+        int expected, output;
+        int numberOfContacts = 5;
+        expected = 3;
+
+        String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+
+        for (int i = 0; i < numberOfContacts; i++)
+        {
+            myContact = new ContactImpl(Names[i]);
+            myLocalContacts.add(myContact);
+            myMeetingContacts.add(myContact);
+        }
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContacts.add(myContact);
+        myMeetingContacts.add(myContact);
+        myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.MARCH, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.FEBRUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        myLocalDate = Calendar.getInstance();
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        TimeUnit.SECONDS.sleep(2);
+        myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+        output = myMeetingList.size();
+        assertEquals(output,expected);
+    }
     @Test
     public void testGetPastMeetingList() throws Exception {
 
