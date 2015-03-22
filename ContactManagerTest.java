@@ -1,9 +1,7 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
@@ -201,8 +199,33 @@ public class ContactManagerTest {
     }
 
     @Test
-    public void testGetFutureMeetingList() throws Exception {
+    public void testGetFutureMeetingListNoMeetingsOnThisDate() throws Exception {
+        List myMeetingList;
+        Calendar myLocalDate = Calendar.getInstance();
+        myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
+        assertTrue(myMeetingList.isEmpty());
+    }
 
+    @Test
+    public void testGetFutureMeetingListNoDuplicates() throws Exception {
+        List myMeetingList;
+        Calendar myLocalDate = Calendar.getInstance();
+        myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
+        for (int i = 0; i < myMeetingList.size()-1; i++)
+        {
+            assertNotSame(myMeetingList.get(i), myMeetingList.get(i+1));
+        }
+    }
+    @Test
+    public void testGetFutureMeetingListSorted() throws Exception {
+        List <Meeting> myMeetingList;
+        Calendar myLocalDate = Calendar.getInstance();
+        myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
+        for (int i = 0; i < myMeetingList.size()-1; i++)
+        {
+            assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
+        }
     }
 
     @Test
