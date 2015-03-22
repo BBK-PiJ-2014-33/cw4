@@ -98,11 +98,23 @@ public class ContactManagerImpl implements ContactManager
      */
     public PastMeeting getPastMeeting(int id)
     {
-
-        PastMeeting myPastMeeting = new PastMeetingImpl(myContacts, Calendar.getInstance(), this.getGlobalMeetingID(),"");
-        return myPastMeeting;
+        if (myMeetings.isEmpty())
+        {
+            return null;
+        }
+        else {
+            for (Meeting m : myMeetings) {
+                if (m.getId() == id && m.getDate().before(Calendar.getInstance())) {
+                    return (PastMeeting) m;
+                }
+                else if(m.getDate().after(Calendar.getInstance()))
+                {
+                    throw new IllegalArgumentException("This meeting happening in the future!");
+                }
+            }
+        }
+        return null;
     }
-
 
     public Meeting getMeeting(int id)
     {

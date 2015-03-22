@@ -95,7 +95,12 @@ public class ContactManagerTest {
         myPastMeeting = myContactManagerClass.getPastMeeting(myMeetingId);
         assertEquals(myPastMeeting.getNotes(),expected);
     }
-*/
+    */
+
+    @Test
+    public void testGetPastMeetingDoesNotExist() throws Exception {
+        assertNull(myContactManagerClass.getFutureMeeting(0));
+    }
     @Test(expected = IllegalArgumentException.class)
     public void testGetPastMeetingFutureMeetingID() throws Exception {
         int myFutureMeetingID;
