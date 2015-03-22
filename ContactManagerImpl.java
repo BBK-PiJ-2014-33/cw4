@@ -1,4 +1,7 @@
+
+
 import java.util.*;
+import java.util.Collections;
 
 public class ContactManagerImpl implements ContactManager
 {
@@ -56,8 +59,20 @@ public class ContactManagerImpl implements ContactManager
 
     public List<Meeting> getFutureMeetingList(Calendar date)
     {
-        List myList = new ArrayList();
-        return myList;
+        List <Meeting> myList = new ArrayList();
+        for (Meeting m : myMeetings)
+        {
+            if(m.getDate().get(Calendar.YEAR)==date.get(Calendar.YEAR) && m.getDate().get(Calendar.MONTH)==date.get(Calendar.MONTH)&& m.getDate().get(Calendar.DAY_OF_MONTH)==date.get(Calendar.DAY_OF_MONTH))
+            {
+                myList.add(m);
+            }
+        }
+        Collections.sort(myList, new Comparator<Meeting>() {
+            public int compare(Meeting o1, Meeting o2) {
+                return o1.getDate().compareTo(o2.getDate());
+            }
+        });
+            return myList;
     }
 
 

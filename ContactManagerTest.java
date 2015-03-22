@@ -12,7 +12,6 @@ public class ContactManagerTest {
     Calendar myDate;
     private Set<Contact> myContacts;
     private Set<Contact> myPastMeetingContacts;
-    private int myPastMeetingId;
 
     @Before
     public void setUp() throws Exception
@@ -65,7 +64,7 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
     }
 
-    @Test(expected = IllegalArgumentException.class)
+  /*  @Test(expected = IllegalArgumentException.class)
     public void testAddMeetingNotesMeetingDoesNotExist() throws Exception {
         myContactManagerClass.addMeetingNotes(0,"adding meeting notes");
     }
@@ -113,7 +112,7 @@ public class ContactManagerTest {
         myMeetingId =  myLocalContactManager.addFutureMeeting(myContacts,Calendar.getInstance());
         TimeUnit.SECONDS.sleep(2);
         myLocalContactManager.getPastMeeting(myMeetingId);
-    }
+    }*/
 
     @Test(expected = IllegalArgumentException.class)
       public void testAddNewPastMeetingEmptyContact() {
@@ -203,6 +202,12 @@ public class ContactManagerTest {
         List myMeetingList;
         Calendar myLocalDate = Calendar.getInstance();
         myLocalDate.set(2020,Calendar.JANUARY, 30);
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
         myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
         assertTrue(myMeetingList.isEmpty());
     }
@@ -211,6 +216,12 @@ public class ContactManagerTest {
     public void testGetFutureMeetingListNoDuplicates() throws Exception {
         List myMeetingList;
         Calendar myLocalDate = Calendar.getInstance();
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
+        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
+        TimeUnit.SECONDS.sleep(2);
         myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
         for (int i = 0; i < myMeetingList.size()-1; i++)
         {
@@ -221,6 +232,18 @@ public class ContactManagerTest {
     public void testGetFutureMeetingListSorted() throws Exception {
         List <Meeting> myMeetingList;
         Calendar myLocalDate = Calendar.getInstance();
+        Calendar myDate1, myDate2, myDate3,  myDate4;
+        myDate3 = Calendar.getInstance();
+        TimeUnit.SECONDS.sleep(2);
+        myDate2 = Calendar.getInstance();
+        TimeUnit.SECONDS.sleep(2);
+        myDate1 = Calendar.getInstance();
+        myDate4 = Calendar.getInstance();
+        myDate4.set(2016,Calendar.JANUARY, 30);
+        myContactManagerClass.addNewPastMeeting(myContacts, myDate1,"");
+        myContactManagerClass.addNewPastMeeting(myContacts, myDate2,"");
+        myContactManagerClass.addNewPastMeeting(myContacts, myDate3,"");
+        myContactManagerClass.addFutureMeeting(myContacts, myDate4);
         myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
         for (int i = 0; i < myMeetingList.size()-1; i++)
         {
@@ -237,8 +260,6 @@ public class ContactManagerTest {
     public void testGetPastMeetingList() throws Exception {
 
     }
-
-
 
     @Test(expected = NullPointerException.class)
     public void testAddNewContactNameNull() throws Exception {
