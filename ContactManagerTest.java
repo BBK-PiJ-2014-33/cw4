@@ -95,7 +95,7 @@ public class ContactManagerTest {
         myPastMeeting = myContactManagerClass.getPastMeeting(myMeetingId);
         assertEquals(myPastMeeting.getNotes(),expected);
     }
-
+*/
     @Test(expected = IllegalArgumentException.class)
     public void testGetPastMeetingFutureMeetingID() throws Exception {
         int myFutureMeetingID;
@@ -108,11 +108,20 @@ public class ContactManagerTest {
     @Test
     public void testGetPastMeeting() throws Exception {
         ContactManager myLocalContactManager = new ContactManagerImpl(myContacts);
+        Calendar myPastDate = Calendar.getInstance();
+        String output, expected;
         int myMeetingId;
-        myMeetingId =  myLocalContactManager.addFutureMeeting(myContacts,Calendar.getInstance());
-        TimeUnit.SECONDS.sleep(2);
-        myLocalContactManager.getPastMeeting(myMeetingId);
-    }*/
+        PastMeeting myFinalPastMeeting;
+        expected = "my test past meeting";
+        myPastDate.set(2014,Calendar.JANUARY, 30);
+        myLocalContactManager.addNewPastMeeting(myContacts,myPastDate,"my test past meeting");
+        List <Meeting> myMeetingList = myLocalContactManager.getFutureMeetingList(myPastDate);
+        Meeting myPastMeeting = myMeetingList.get(0);
+        myMeetingId = myPastMeeting.getId();
+        myFinalPastMeeting = myLocalContactManager.getPastMeeting(myMeetingId);
+        output = myFinalPastMeeting.getNotes();
+        assertEquals(output,expected);
+    }
 
     @Test(expected = IllegalArgumentException.class)
       public void testAddNewPastMeetingEmptyContact() {
