@@ -65,7 +65,7 @@ public class ContactManagerTest {
         assertNotNull(myContactManagerClass.addFutureMeeting(myContacts,myFutureDate));
     }
 
-  /*  @Test(expected = IllegalArgumentException.class)
+    @Test(expected = IllegalArgumentException.class)
     public void testAddMeetingNotesMeetingDoesNotExist() throws Exception {
         myContactManagerClass.addMeetingNotes(0,"adding meeting notes");
     }
@@ -96,7 +96,7 @@ public class ContactManagerTest {
         myPastMeeting = myContactManagerClass.getPastMeeting(myMeetingId);
         assertEquals(myPastMeeting.getNotes(),expected);
     }
-    */
+
 
     @Test
     public void testGetPastMeetingDoesNotExist() throws Exception {
@@ -231,12 +231,10 @@ public class ContactManagerTest {
     public void testGetFutureMeetingListNoDuplicates() throws Exception {
         List myMeetingList;
         Calendar myLocalDate = Calendar.getInstance();
-        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
-        TimeUnit.SECONDS.sleep(2);
-        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
-        TimeUnit.SECONDS.sleep(2);
-        myContactManagerClass.addFutureMeeting(myContacts,Calendar.getInstance());
-        TimeUnit.SECONDS.sleep(2);
+        myLocalDate.set(2020,Calendar.JANUARY,30);
+        myContactManagerClass.addFutureMeeting(myContacts,myLocalDate);
+        myContactManagerClass.addFutureMeeting(myContacts,myLocalDate);
+        myContactManagerClass.addFutureMeeting(myContacts, myLocalDate);
         myMeetingList = myContactManagerClass.getFutureMeetingList(myLocalDate);
         for (int i = 0; i < myMeetingList.size()-1; i++)
         {
@@ -354,7 +352,7 @@ public class ContactManagerTest {
         }
 
     }
-    @Test
+    /*@Test
     public void testGetFutureMeetingListContactSorted() throws Exception {
         List <Meeting> myMeetingList;
         Set<Contact> myLocalContacts = new HashSet<Contact>();
@@ -387,7 +385,7 @@ public class ContactManagerTest {
         {
             assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
         }
-    }
+    }*/
 
     @Test
     public void testGetFutureMeetingListContact() throws Exception

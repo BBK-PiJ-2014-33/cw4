@@ -1,5 +1,8 @@
 
 
+import org.omg.CORBA.*;
+
+import java.lang.Object;
 import java.util.*;
 import java.util.Collections;
 
@@ -190,9 +193,30 @@ public class ContactManagerImpl implements ContactManager
      * @throws IllegalStateException if the meeting is set for a date in the future
      * @throws NullPointerException if the notes are null */
 
-    public void addMeetingNotes(int id, String text)
-    {
+    public void addMeetingNotes(int id, String text) {
+        Boolean idFlag = false;
+        if (text.equals(null))
+        {
+            throw new NullPointerException("Notes can not be null");
+        }else{
+            for (Meeting m : myMeetings){
+                if (m.getId() == id){
+                    if (m.getDate().after(Calendar.getInstance())){
+                        throw new IllegalStateException("Can not add notes to meeting in future");
+                    }else{
+                            PastMeeting myPastMeeting = new PastMeetingImpl(m.getContacts(),m.getDate(),m.getId(),text);
+                            myMeetings.remove(m);
+                            myMeetings.add(myPastMeeting);
+                            idFlag = true;
+                    }
+                }
 
+            }
+            if(!idFlag){
+                throw new IllegalArgumentException("There is no meeting with this id");
+            }
+
+        }
     }
     public Set<Contact> getContacts(int... ids){
 
