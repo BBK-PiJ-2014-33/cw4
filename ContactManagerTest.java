@@ -426,6 +426,7 @@ public class ContactManagerTest {
         assertEquals(output,expected);
     }
     @Test
+<<<<<<< HEAD
     public void testGetPastMeetingListNoMeetingsWithThisContact() throws Exception {
         List myMeetingList;
         Set<Contact> myLocalContacts = new HashSet<Contact>();
@@ -571,6 +572,12 @@ public class ContactManagerTest {
     }
 
 
+=======
+    public void testGetPastMeetingList() throws Exception {
+
+    }
+
+>>>>>>> origin/master
     @Test(expected = NullPointerException.class)
     public void testAddNewContactNameNull() throws Exception {
         myContactManagerClass.addNewContact("Anna Kent", null);
