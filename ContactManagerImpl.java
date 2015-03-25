@@ -1,14 +1,9 @@
 
 
-<<<<<<< HEAD
-import java.util.*;
-=======
-import org.omg.CORBA.*;
 
-import java.lang.Object;
 import java.util.*;
+
 import java.util.Collections;
->>>>>>> origin/master
 
 public class ContactManagerImpl implements ContactManager
 {
@@ -107,7 +102,7 @@ public class ContactManagerImpl implements ContactManager
 
         return myList;
     }
-<<<<<<< HEAD
+
      /**
      * Returns the list of past meetings in which this contact has participated. *
      * If there are none, the returned list will be empty. Otherwise,
@@ -123,8 +118,7 @@ public class ContactManagerImpl implements ContactManager
          List <PastMeeting> myPastMeetingList = new ArrayList();
          return myPastMeetingList;
      }
-=======
->>>>>>> origin/master
+
 
     public FutureMeeting getFutureMeeting(int id)
     {
