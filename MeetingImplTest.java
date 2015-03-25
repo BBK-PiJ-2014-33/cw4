@@ -12,6 +12,7 @@ public class MeetingImplTest {
     private Meeting myMeetingClass;
     private Set<Contact> myContacts;
     Calendar myDate;
+    ContactManagerImpl myContactManager;
 
     @Before
     public void setUp() throws Exception
@@ -24,7 +25,8 @@ public class MeetingImplTest {
         {
             myContacts.add(new ContactImpl(Names[i]));
         }
-        myMeetingClass = new MeetingImpl(myContacts, myDate);
+        myContactManager = new ContactManagerImpl(myContacts);
+        myMeetingClass = new MeetingImpl(myContacts, myDate,myContactManager.getGlobalMeetingID());
     }
 
     @Test
@@ -69,7 +71,7 @@ public class MeetingImplTest {
 
         for (int i = 0; i < numberOfMeetings; i++)
         {
-            myMeetings[i] = new MeetingImpl(myContacts,myDate);
+            myMeetings[i] = new MeetingImpl(myContacts,myDate, myContactManager.getGlobalMeetingID());
         }
 
         for (int i = 0; i < numberOfMeetings; i++)
@@ -80,7 +82,9 @@ public class MeetingImplTest {
                 if(i!=k)
                 {
                     myId2 = myMeetings[k].getId();
-                    assertNotEquals(myId1,myId2);
+                    assertFalse(myId1==myId2);
+                    //assertNotEquals not available
+                    //assertNotEquals(myId1,myId2);
                 }
 
             }

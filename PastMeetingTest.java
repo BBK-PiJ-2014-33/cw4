@@ -12,6 +12,7 @@ public class PastMeetingTest {
     private PastMeetingImpl myPastMeetingClass;
     private Set<Contact> myContacts;
     Calendar myDate;
+    ContactManagerImpl myContactManager;
 
     @Before
     public void setUp() throws Exception {
@@ -23,7 +24,8 @@ public class PastMeetingTest {
         {
             myContacts.add(new ContactImpl(Names[i]));
         }
-        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate);
+        myContactManager = new ContactManagerImpl(myContacts);
+        myPastMeetingClass = new PastMeetingImpl(myContacts, myDate,myContactManager.getGlobalMeetingID(),"meeting went well");
 
     }
 
@@ -34,16 +36,9 @@ public class PastMeetingTest {
     }
 
     @Test
-    public void testAddNotesGetNotes() throws Exception
+    public void testGetNotes() throws Exception
     {
-        String expected = "note1\n";
-        expected = expected + "note2\n";
-        expected = expected + "note3\n";
-
-        myPastMeetingClass.addNotes("note1");
-        myPastMeetingClass.addNotes("note2");
-        myPastMeetingClass.addNotes("note3");
-
+        String expected = "meeting went well";
         assertEquals(myPastMeetingClass.getNotes(), expected);
     }
 }

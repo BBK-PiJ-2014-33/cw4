@@ -5,10 +5,10 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
 
     private String myNotes;
 
-    public PastMeetingImpl (Set<Contact> myContacts, Calendar myMeetingDate)
+    public PastMeetingImpl (Set<Contact> myContacts, Calendar myMeetingDate, int myId, String notes)
     {
-        super (myContacts, myMeetingDate);
-        myNotes = "";
+        super (myContacts, myMeetingDate, myId);
+        myNotes = notes;
     }
 
     public String getNotes()
@@ -16,11 +16,4 @@ public class PastMeetingImpl extends MeetingImpl implements PastMeeting {
         return myNotes;
     }
 
-    public void addNotes (String notes)
-    {
-        StringBuilder st = new StringBuilder(myNotes);
-        st.append(notes);
-        st.append(System.getProperty("line.separator"));
-        myNotes = st.toString();
-    }
 }
