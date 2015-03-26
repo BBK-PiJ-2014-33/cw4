@@ -508,10 +508,9 @@ public class ContactManagerTest {
         }
     }
 
-    /*@Test
-
+    @Test
     public void testGetPastMeetingListSorted() throws Exception {
-        List <Meeting> myMeetingList;
+        List <PastMeeting> myMeetingList;
         Set<Contact> myLocalContacts = new HashSet<Contact>();
         Set<Contact> myMeetingContacts = new HashSet<Contact>();
         Contact myContact;
@@ -525,7 +524,8 @@ public class ContactManagerTest {
             myMeetingContacts.add(myContact);
         }
 
-        myMeetingContacts.add(myContact);
+        myContact = new ContactImpl("Brenda Howard");
+        myLocalContacts.add(myContact);
         myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
         Calendar myLocalDate = Calendar.getInstance();
         myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
@@ -536,7 +536,7 @@ public class ContactManagerTest {
         {
             assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
         }
-    }*/
+    }
 
     @Test
     public void testGetPastMeetingList() throws Exception

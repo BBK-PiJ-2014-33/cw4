@@ -1,8 +1,5 @@
 
-
-
 import java.util.*;
-
 import java.util.Collections;
 
 public class ContactManagerImpl implements ContactManager
@@ -115,7 +112,7 @@ public class ContactManagerImpl implements ContactManager
 
      public List<PastMeeting> getPastMeetingList(Contact contact)
      {
-         List <PastMeeting> myPastMeetingList = new ArrayList();
+         List <PastMeeting> myPastMeetingList = null;
          return myPastMeetingList;
      }
 
@@ -282,6 +279,10 @@ public class ContactManagerImpl implements ContactManager
             }
         }
         return myMatchingNameSet;
+    }
+    public void flush()
+    {
+
     }
 
 }

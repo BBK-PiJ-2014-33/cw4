@@ -130,7 +130,8 @@ public interface ContactManager {
     /**
      * Save all data to disk. *
      * This method must be executed when the program is
-     * closed and when/if the user requests it. *//*
-    void flush();
-*/
+     * closed and when/if the user requests it. */
+
+     void flush();
+
 }
