@@ -300,5 +300,6 @@ public class ContactManagerImpl implements ContactManager, Serializable
         return myMatchingNameSet;
     }
     public void flush() {
+
     }
 }

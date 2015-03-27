@@ -1,12 +1,16 @@
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
-
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
 public class ContactManagerTest {
     ContactManager myContactManagerClass;
@@ -352,7 +356,7 @@ public class ContactManagerTest {
         }
 
     }
-    /*@Test
+    @Test
     public void testGetFutureMeetingListContactSorted() throws Exception {
         List <Meeting> myMeetingList;
         Set<Contact> myLocalContacts = new HashSet<Contact>();
@@ -373,19 +377,23 @@ public class ContactManagerTest {
         myLocalContacts.add(myContact);
         myMeetingContacts.add(myContact);
         myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
-        Calendar myLocalDate = Calendar.getInstance();
-        myLocalDate.set(2020,Calendar.MARCH, 30);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        myLocalDate.set(2020,Calendar.FEBRUARY, 30);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        myLocalDate.set(2020,Calendar.JANUARY, 30);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
+        Calendar myLocalDate1 = Calendar.getInstance();
+        Calendar myLocalDate2 = Calendar.getInstance();
+        Calendar myLocalDate3 = Calendar.getInstance();
+
+        myLocalDate1.set(2020,Calendar.MARCH, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate1);
+        myLocalDate2.set(2020,Calendar.FEBRUARY, 25);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate2);
+        myLocalDate3.set(2020,Calendar.JANUARY, 30);
+        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate3);
         myMeetingList =  myLocalContactManagerClass.getFutureMeetingList(myContact);
+
         for (int i = 0; i < myMeetingList.size()-1; i++)
         {
             assertTrue(myMeetingList.get(i).getDate().before(myMeetingList.get(i+1).getDate()));
         }
-    }*/
+    }
 
     @Test
     public void testGetFutureMeetingListContact() throws Exception
@@ -678,6 +686,54 @@ public class ContactManagerTest {
 
      @Test
     public void testFlush() throws Exception {
+         Set<Contact> myLocalContacts = new HashSet<Contact>();
+         Set<Contact> myMeetingContacts = new HashSet<Contact>();
+         Contact myContact;
+         ContactManager expected, actual;
+         int numberOfContacts = 5;
 
-    }
+         String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+         for (int i = 0; i < numberOfContacts; i++)
+         {
+             myContact = new ContactImpl(Names[i]);
+             myLocalContacts.add(myContact);
+             myMeetingContacts.add(myContact);
+         }
+         myContact = new ContactImpl("Brenda Howard");
+         myLocalContacts.add(myContact);
+         expected = new ContactManagerImpl(myLocalContacts);
+         Calendar myLocalDate1 = Calendar.getInstance();
+         Calendar myLocalDate2 = Calendar.getInstance();
+         Calendar myLocalDate3 = Calendar.getInstance();
+
+         myLocalDate1.set(2020,Calendar.MARCH, 30);
+         expected.addFutureMeeting(myMeetingContacts,myLocalDate1);
+         myLocalDate2.set(2020,Calendar.FEBRUARY, 25);
+         expected.addFutureMeeting(myMeetingContacts,myLocalDate2);
+         myLocalDate3.set(2020,Calendar.JANUARY, 30);
+         expected.addFutureMeeting(myMeetingContacts,myLocalDate3);
+         expected.flush();
+         try
+         {
+             FileInputStream fileIn =new FileInputStream("ContactManager.ser");
+             ObjectInputStream in = new ObjectInputStream(fileIn);
+             actual = (ContactManagerImpl)in.readObject();
+             in.close();
+             fileIn.close();
+
+         }catch(IOException i)
+
+         {
+             i.printStackTrace();
+             return;
+
+         }catch(ClassNotFoundException c)
+
+         {
+             System.out.println("ContactManager class not found");
+             c.printStackTrace();
+             return;
+         }
+        assertEquals(expected,actual);
+     }
 }
