@@ -679,45 +679,44 @@ public class ContactManagerTest {
         myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 );
     }
 
-    /**
-     * Save all data to disk. *
-     * This method must be executed when the program is
-     * closed and when/if the user requests it. */
-
      @Test
     public void testFlush() throws Exception {
          Set<Contact> myLocalContacts = new HashSet<Contact>();
          Set<Contact> myMeetingContacts = new HashSet<Contact>();
          Contact myContact;
-         ContactManager expected, actual;
-         int numberOfContacts = 5;
+         ContactManager myLocalContactManager;
+         ContactManager myRestoredContactManager;
+         int numberOfContacts = 3;
+         int numberOfMeetings = 3;
+         int [] myContactsIDs = new int [numberOfContacts];
+         int [] myMeetingIDs = new int[numberOfMeetings];
 
-         String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
+         String [] Names = {"Anna Jones", "David Crampton", "Maria Jones"};
          for (int i = 0; i < numberOfContacts; i++)
          {
              myContact = new ContactImpl(Names[i]);
              myLocalContacts.add(myContact);
              myMeetingContacts.add(myContact);
+             myContactsIDs[i]=myContact.getId();
          }
-         myContact = new ContactImpl("Brenda Howard");
-         myLocalContacts.add(myContact);
-         expected = new ContactManagerImpl(myLocalContacts);
+
+         myLocalContactManager = new ContactManagerImpl(myLocalContacts);
          Calendar myLocalDate1 = Calendar.getInstance();
          Calendar myLocalDate2 = Calendar.getInstance();
          Calendar myLocalDate3 = Calendar.getInstance();
 
          myLocalDate1.set(2020,Calendar.MARCH, 30);
-         expected.addFutureMeeting(myMeetingContacts,myLocalDate1);
+         myMeetingIDs[0] = myLocalContactManager.addFutureMeeting(myMeetingContacts,myLocalDate1);
          myLocalDate2.set(2020,Calendar.FEBRUARY, 25);
-         expected.addFutureMeeting(myMeetingContacts,myLocalDate2);
+         myMeetingIDs[1]=myLocalContactManager.addFutureMeeting(myMeetingContacts,myLocalDate2);
          myLocalDate3.set(2020,Calendar.JANUARY, 30);
-         expected.addFutureMeeting(myMeetingContacts,myLocalDate3);
-         expected.flush();
+         myMeetingIDs[2]=myLocalContactManager.addFutureMeeting(myMeetingContacts,myLocalDate3);
+         myLocalContactManager.flush();
          try
          {
              FileInputStream fileIn =new FileInputStream("ContactManager.ser");
              ObjectInputStream in = new ObjectInputStream(fileIn);
-             actual = (ContactManagerImpl)in.readObject();
+             myRestoredContactManager = (ContactManagerImpl)in.readObject();
              in.close();
              fileIn.close();
 
@@ -734,6 +733,10 @@ public class ContactManagerTest {
              c.printStackTrace();
              return;
          }
-        assertEquals(expected,actual);
+
+         for (int i = 0; i < numberOfMeetings; i++)
+         {
+             assertTrue(myLocalContactManager.getMeeting(myMeetingIDs[i]).getDate().equals(myRestoredContactManager.getMeeting(myMeetingIDs[i]).getDate()));
+         }
      }
 }

@@ -22,6 +22,7 @@ public class ContactManagerImpl implements ContactManager, Serializable
         return myGlobalMeetingID;
     }
 
+
     public int addFutureMeeting(Set<Contact> contacts, Calendar date){
         FutureMeeting myFutureMeeting = new FutureMeetingImpl(contacts, date, getGlobalMeetingID());
         if(date.before(Calendar.getInstance())){
@@ -300,6 +301,17 @@ public class ContactManagerImpl implements ContactManager, Serializable
         return myMatchingNameSet;
     }
     public void flush() {
+        try
+        {
+            FileOutputStream fileOut = new FileOutputStream("ContactManager.ser");
+            ObjectOutputStream outStream = new ObjectOutputStream(fileOut);
+            outStream.writeObject(this);
+            outStream.close();
+            fileOut.close();
+        }catch(IOException i)
 
+        {
+            i.printStackTrace();
+        }
     }
 }
