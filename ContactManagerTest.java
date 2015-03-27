@@ -546,7 +546,7 @@ public class ContactManagerTest {
         Set<Contact> myMeetingContacts = new HashSet<Contact>();
         Contact myContact;
         ContactManager myLocalContactManagerClass;
-        int expected, output;
+        int expected, actual;
         int numberOfContacts = 5;
         expected = 3;
         String [] Names = {"Anna Jones", "David Crampton", "Maria Jones", "Nick White", "Scott Goldstone"};
@@ -558,17 +558,16 @@ public class ContactManagerTest {
         }
         myContact = new ContactImpl("Brenda Howard");
         myLocalContacts.add(myContact);
-        myMeetingContacts.add(myContact);
         myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
         Calendar myLocalDate = Calendar.getInstance();
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
+        myLocalContactManagerClass.addFutureMeeting(myLocalContacts,myLocalDate);
         myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        myLocalContactManagerClass.addFutureMeeting(myMeetingContacts,myLocalDate);
-        TimeUnit.SECONDS.sleep(2);
+        TimeUnit.SECONDS.sleep(1);
         myMeetingList =  myLocalContactManagerClass.getPastMeetingList(myContact);
-        output = myMeetingList.size();
-        assertEquals(output,expected);
+        actual = myMeetingList.size();
+        assertEquals(expected,actual);
     }
 
 
@@ -669,10 +668,15 @@ public class ContactManagerTest {
         }
 
         myLocalContactManagerClass = new ContactManagerImpl(myLocalContacts);
-        expected = myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 );
+        myLocalContactManagerClass.getContacts(myContactIDs[0],myContactIDs[1],0 );
     }
 
-    @Test
+    /**
+     * Save all data to disk. *
+     * This method must be executed when the program is
+     * closed and when/if the user requests it. */
+
+     @Test
     public void testFlush() throws Exception {
 
     }

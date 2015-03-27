@@ -1,8 +1,8 @@
-
+import java.io.*;
 import java.util.*;
-import java.util.Collections;
 
-public class ContactManagerImpl implements ContactManager
+
+public class ContactManagerImpl implements ContactManager, Serializable
 {
     private Set<Contact> myContacts;
     private Set<Meeting> myMeetings;
@@ -66,14 +66,19 @@ public class ContactManagerImpl implements ContactManager
                 myList.add(m);
             }
         }
+            sortMeetingList(myList);
+            return myList;
+    }
+    private void sortMeetingList(List<Meeting> myList)
+    {
         Collections.sort(myList, new Comparator<Meeting>() {
             @Override
             public int compare(Meeting m1, Meeting m2) {
                 return m1.getDate().compareTo(m2.getDate());
             }
         });
-            return myList;
     }
+
 
     public List<Meeting> getFutureMeetingList(Contact contact)
     {
@@ -89,33 +94,59 @@ public class ContactManagerImpl implements ContactManager
                myList.add(m);
            }
         }
-
-        Collections.sort(myList, new Comparator<Meeting>() {
-            @Override
-            public int compare(Meeting m1, Meeting m2) {
-                return m1.getDate().compareTo(m2.getDate());
-            }
-        });
-
+        sortMeetingList(myList);
         return myList;
     }
 
-     /**
-     * Returns the list of past meetings in which this contact has participated. *
-     * If there are none, the returned list will be empty. Otherwise,
-     * the list will be chronologically sorted and will not contain any
-     * duplicates.
-     *
-     * @param contact one of the user’s contacts
-     * @return the list of future meeting(s) scheduled with this contact (maybe empty).
-     * @throws IllegalArgumentException if the contact does not exist*/
-
      public List<PastMeeting> getPastMeetingList(Contact contact)
      {
-         List <PastMeeting> myPastMeetingList = null;
+         List <PastMeeting> myPastMeetingList = new ArrayList<PastMeeting>();
+         PastMeeting myPastMeeting;
+         int myNumberOfMeetings = myMeetings.size();
+         Meeting myMeeting;
+         int [] myMeetingIds;
+         if(!myContacts.contains(contact))
+         {
+             throw new IllegalArgumentException("This contact does not exist");
+         }
+         myMeetingIds = getMeetingIDs();
+         for (int i = 0; i < myNumberOfMeetings; i++)
+         {
+             myMeeting = getMeeting(myMeetingIds[i]);
+             if(myMeeting.getContacts().contains(contact))
+             {
+                 if(myMeeting.getDate().before(Calendar.getInstance()))
+                 {
+                     if(myMeeting.getClass().getName().equals("FutureMeetingImpl"))
+                     {
+                         addMeetingNotes(myMeetingIds[i],"");
+                     }
+                     myPastMeeting = getPastMeeting(myMeetingIds[i]);
+                     myPastMeetingList.add(myPastMeeting);
+                 }
+             }
+         }
+
+         Collections.sort(myPastMeetingList, new Comparator<Meeting>() {
+             @Override
+             public int compare(Meeting m1, Meeting m2) {
+                 return m1.getDate().compareTo(m2.getDate());
+             }
+         });
          return myPastMeetingList;
      }
-
+    private int [] getMeetingIDs()
+{
+    int myMeetingSize = myMeetings.size();
+    int item=0;
+    int [] myMeetingIDs = new int [myMeetingSize];
+    for (Meeting m : myMeetings)
+    {
+        myMeetingIDs[item] = m.getId();
+        item++;
+    }
+    return myMeetingIDs;
+}
 
     public FutureMeeting getFutureMeeting(int id)
     {
@@ -195,17 +226,6 @@ public class ContactManagerImpl implements ContactManager
         myContacts.add(myNewContact);
     }
 
-     /*
-     * Add notes to a meeting.
-     * This method is used when a future meeting takes place, and is
-     * then converted to a past meeting (with notes). *
-     * It can be also used to add notes to a past meeting at a later date. *
-     * @param id the ID of the meeting
-     * @param text messages to be added about the meeting.
-     * @throws IllegalArgumentException if the meeting does not exist
-     * @throws IllegalStateException if the meeting is set for a date in the future
-     * @throws NullPointerException if the notes are null */
-
     public void addMeetingNotes(int id, String text) {
         Boolean idFlag = false;
         if (text.equals(null))
@@ -221,14 +241,13 @@ public class ContactManagerImpl implements ContactManager
                             myMeetings.remove(m);
                             myMeetings.add(myPastMeeting);
                             idFlag = true;
+                            break;
                     }
                 }
-
             }
             if(!idFlag){
                 throw new IllegalArgumentException("There is no meeting with this id");
             }
-
         }
     }
     public Set<Contact> getContacts(int... ids){
@@ -280,9 +299,6 @@ public class ContactManagerImpl implements ContactManager
         }
         return myMatchingNameSet;
     }
-    public void flush()
-    {
-
+    public void flush() {
     }
-
 }

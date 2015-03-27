@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public class ContactImpl implements Contact {
+public class ContactImpl implements Contact,  Serializable {
 
     private static int GlobalContactID=1;
     private int myId;
