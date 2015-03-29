@@ -11,8 +11,8 @@ public class MeetingImplTest {
 
     private Meeting myMeetingClass;
     private Set<Contact> myContacts;
-    Calendar myDate;
-    ContactManagerImpl myContactManager;
+    private Calendar myDate;
+    private ContactManagerImpl myContactManager;
 
     @Before
     public void setUp() throws Exception
@@ -83,8 +83,6 @@ public class MeetingImplTest {
                 {
                     myId2 = myMeetings[k].getId();
                     assertFalse(myId1==myId2);
-                    //assertNotEquals not available
-                    //assertNotEquals(myId1,myId2);
                 }
 
             }
